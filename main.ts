@@ -20,27 +20,36 @@ namespace myTiles {
 `
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    projectile = sprites.createProjectileFromSprite(img`
+    if (Shot == 1) {
+        projectile3 = sprites.createProjectileFromSprite(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
-. . . . . . . 7 . . . . . . . . 
+. . . . . . . . . . . . . . . . 
 . . . . . . 7 7 7 . . . . . . . 
-. . . . . 7 7 7 7 7 . . . . . . 
-. . . . 7 7 7 7 7 7 7 . . . . . 
-. . . . . 7 7 7 7 7 . . . . . . 
 . . . . . . 7 7 7 . . . . . . . 
-. . . . . . . 7 . . . . . . . . 
+. . . . . . 7 7 7 . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
-`, mySprite, mySprite.vx, mySprite.vy)
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, mySprite, controller.dx(5000), controller.dy(5000))
+        Shot = 0
+    }
+    pause(200)
+    Shot = 1
 })
-let projectile: Sprite = null
+let projectile3: Sprite = null
+let Shot = 0
+let projectile2: Sprite = null
 let mySprite: Sprite = null
+let Mode = 1
+info.setLife(10)
 scene.setBackgroundImage(img`
 f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
 f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
@@ -186,7 +195,7 @@ f f 1 1 1 . . . . . . . . . . 1 1 1 f f
 5 5 f f . . . . . . . . . . . . f f 5 5 
 `, SpriteKind.Player)
 controller.moveSprite(mySprite)
-let mySprite2 = sprites.create(img`
+let myEnemy = sprites.create(img`
 . . . . . . . . . . . e e e e e e e e e e . . . . . . . . . . . 
 . . . . . . . . e e e 4 4 4 4 4 4 4 4 4 4 e e e . . . . . . . . 
 . . . . . . e e 4 4 4 4 4 4 4 4 4 b b 4 4 4 4 4 e e . . . . . . 
@@ -219,14 +228,50 @@ let mySprite2 = sprites.create(img`
 . . . . . e e e e 4 4 4 4 4 4 4 4 4 4 4 4 4 4 e e e . . . . . . 
 . . . . . . . . . e e e e e e e e e e e e e e . . . . . . . . . 
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
-`, SpriteKind.Player)
-forever(function () {
-    music.playMelody("B A G A G F A C5 ", 120)
-    music.playMelody("C5 G B A - A C5 B ", 77)
-    music.playMelody("G F G - - F E D ", 120)
-    music.playMelody("- - - - - - - - ", 77)
-})
-forever(function () {
-    music.playMelody("- - - - - - - - ", 120)
-    music.playMelody("B A G A G F A C5 ", 77)
-})
+`, SpriteKind.Enemy)
+myEnemy.setPosition(74, 10)
+while (true) {
+    if (Mode == 1) {
+        pause(100)
+        for (let index = 0; index <= 1000; index++) {
+            projectile2 = sprites.createProjectileFromSprite(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . 2 4 2 . . . . . . 
+. . . . . . . 4 5 4 . . . . . . 
+. . . . . . . 2 4 2 . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, myEnemy, 100 * Math.cos(index), 100 * Math.sin(index))
+            myEnemy.follow(mySprite, 30)
+            pause(20)
+            index += 0.55
+        }
+        Mode += 1
+    } else {
+        if (Mode == 2) {
+            myEnemy.startEffect(effects.coolRadial)
+            myEnemy.follow(mySprite, 0)
+            pause(5000)
+            effects.clearParticles(myEnemy)
+            myEnemy.startEffect(effects.fire)
+            myEnemy.follow(mySprite, 100)
+            pause(30000)
+            Mode += 1
+        } else {
+            effects.clearParticles(myEnemy)
+            myEnemy.follow(mySprite, 0)
+            Mode = 1
+            pause(100000)
+        }
+    }
+}
