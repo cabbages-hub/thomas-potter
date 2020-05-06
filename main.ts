@@ -21,14 +21,14 @@ namespace myTiles {
 }
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Shot2 == 1) {
-        projectile = sprites.createProjectileFromSprite(img`
+        Projectile_4 = sprites.createProjectileFromSprite(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . a . . . . . . . 
 . . . . . . . 8 f 8 . . . . . . 
-. . . . . . a f b f a . . . . . 
+. . . . . . a f 6 f a . . . . . 
 . . . . . . . 8 f 8 . . . . . . 
 . . . . . . . . a . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -38,10 +38,10 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
-`, mySprite, (myEnemy.x - mySprite.x) * 50 / Math.sqrt((myEnemy.x - mySprite.x) ** 2 + (myEnemy.y - mySprite.y) ** 2), 50 * (myEnemy.y - mySprite.y) / Math.sqrt((myEnemy.x - mySprite.x) ** 2 + (myEnemy.y - mySprite.y) ** 2))
+`, mySprite, (myEnemy.x - mySprite.x) * 200 / Math.sqrt((myEnemy.x - mySprite.x) ** 2 + (myEnemy.y - mySprite.y) ** 2), 200 * (myEnemy.y - mySprite.y) / Math.sqrt((myEnemy.x - mySprite.x) ** 2 + (myEnemy.y - mySprite.y) ** 2))
         Shot2 = 0
     }
-    pause(1000)
+    pause(5000)
     Shot2 = 1
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -89,6 +89,7 @@ function teleport (Base: number) {
     }
 }
 let projectile3: Sprite = null
+let Projectile_4: Sprite = null
 let projectile: Sprite = null
 let projectile2: Sprite = null
 let myEnemy: Sprite = null
@@ -222,7 +223,7 @@ f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
 f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
 `)
 mySprite = sprites.create(img`
-. 5 f f . . . . . . . . . . . . f f 5 5 
+5 5 f f . . . . . . . . . . . . f f 5 5 
 5 f f 1 1 1 . . . . . . . . . 1 1 f f 5 
 f f 1 1 1 1 . . . . . . . . . 1 1 1 f f 
 f 1 1 1 1 1 . . . . . . . . . 1 1 1 1 f 
@@ -300,8 +301,14 @@ while (true) {
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
-`, myEnemy, 100 * Math.cos(index), 100 * Math.sin(index))
+`, myEnemy, 400 * Math.cos(index), 400 * Math.sin(index))
             myEnemy.follow(mySprite, 30)
+            for (let index2 = 0; index2 < 4; index2++) {
+                if (mySprite.overlapsWith(projectile2)) {
+                    info.changeLifeBy(-1)
+                }
+                pause(50)
+            }
             pause(20)
             index += 0.55
         }
@@ -318,19 +325,34 @@ while (true) {
                 if (mySprite.x < 65 && mySprite.x > 55) {
                     if (mySprite.y < 115 && mySprite.y > 105) {
                         teleport(0)
-                        pause(1000)
+                        for (let index = 0; index < 1000; index++) {
+                            pause(1)
+                            if (mySprite.overlapsWith(myEnemy)) {
+                                info.changeLifeBy(-1)
+                            }
+                        }
                     }
                 }
                 if (mySprite.x < 75 && mySprite.x > 65) {
                     if (mySprite.y > 15 && mySprite.y < 25) {
                         teleport(1)
-                        pause(1000)
+                        for (let index = 0; index < 1000; index++) {
+                            pause(1)
+                            if (mySprite.overlapsWith(myEnemy)) {
+                                info.changeLifeBy(-1)
+                            }
+                        }
                     }
                 }
                 if (mySprite.x > 135 && mySprite.x < 145) {
                     if (mySprite.y > 65 && mySprite.y < 75) {
                         teleport(2)
-                        pause(1000)
+                        for (let index = 0; index < 1000; index++) {
+                            pause(1)
+                            if (mySprite.overlapsWith(myEnemy)) {
+                                info.changeLifeBy(-1)
+                            }
+                        }
                     }
                 }
                 pause(1)
