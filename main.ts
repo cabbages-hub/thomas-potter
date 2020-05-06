@@ -19,6 +19,31 @@ namespace myTiles {
 . . . . . . . . . . . . . . . . 
 `
 }
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (Shot2 == 1) {
+        projectile = sprites.createProjectileFromSprite(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . a . . . . . . . 
+. . . . . . . 8 f 8 . . . . . . 
+. . . . . . a f b f a . . . . . 
+. . . . . . . 8 f 8 . . . . . . 
+. . . . . . . . a . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, mySprite, (myEnemy.x - mySprite.x) * 50 / Math.sqrt((myEnemy.x - mySprite.x) ** 2 + (myEnemy.y - mySprite.y) ** 2), 50 * (myEnemy.y - mySprite.y) / Math.sqrt((myEnemy.x - mySprite.x) ** 2 + (myEnemy.y - mySprite.y) ** 2))
+        Shot2 = 0
+    }
+    pause(1000)
+    Shot2 = 1
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Shot == 1) {
         projectile3 = sprites.createProjectileFromSprite(img`
@@ -64,11 +89,15 @@ function teleport (Base: number) {
     }
 }
 let projectile3: Sprite = null
-let Shot = 0
 let projectile: Sprite = null
 let projectile2: Sprite = null
+let myEnemy: Sprite = null
 let mySprite: Sprite = null
+let Shot = 0
+let Shot2 = 0
 let Mode = 1
+Shot2 = 1
+Shot = 1
 info.setLife(10)
 scene.setBackgroundImage(img`
 f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
@@ -215,7 +244,7 @@ f f 1 1 1 . . . . . . . . . . 1 1 1 f f
 5 5 f f . . . . . . . . . . . . f f 5 5 
 `, SpriteKind.Player)
 controller.moveSprite(mySprite)
-let myEnemy = sprites.create(img`
+myEnemy = sprites.create(img`
 . . . . . . . . . . . e e e e e e e e e e . . . . . . . . . . . 
 . . . . . . . . e e e 4 4 4 4 4 4 4 4 4 4 e e e . . . . . . . . 
 . . . . . . e e 4 4 4 4 4 4 4 4 4 b b 4 4 4 4 4 e e . . . . . . 
@@ -284,8 +313,8 @@ while (true) {
             pause(5000)
             effects.clearParticles(myEnemy)
             myEnemy.startEffect(effects.fire)
-            myEnemy.follow(mySprite, 100)
-            for (let index = 0; index < 50000; index++) {
+            myEnemy.follow(mySprite, 70)
+            for (let index = 0; index < 1; index++) {
                 if (mySprite.x < 65 && mySprite.x > 55) {
                     if (mySprite.y < 115 && mySprite.y > 105) {
                         teleport(0)
@@ -308,8 +337,9 @@ while (true) {
             }
             Mode += 1
         } else {
-            myEnemy.follow(mySprite, 30)
-            projectile = sprites.createProjectileFromSprite(img`
+            myEnemy.follow(mySprite, 40)
+            for (let index = 0; index < 300; index++) {
+                projectile = sprites.createProjectileFromSprite(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -326,7 +356,11 @@ while (true) {
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
-`, myEnemy, (mySprite.x - myEnemy.x) * 100 / 0, 100)
+`, myEnemy, (mySprite.x - myEnemy.x) * 200 / Math.sqrt((mySprite.x - myEnemy.x) ** 2 + (mySprite.y - myEnemy.y) ** 2), 200 * (mySprite.y - myEnemy.y) / Math.sqrt((mySprite.x - myEnemy.x) ** 2 + (mySprite.y - myEnemy.y) ** 2))
+                pause(100)
+            }
+            effects.clearParticles(myEnemy)
+            Mode = 1
         }
     }
 }
