@@ -99,7 +99,7 @@ let Shot2 = 0
 let Mode = 1
 Shot2 = 1
 Shot = 1
-info.setLife(10)
+info.setLife(100)
 scene.setBackgroundImage(img`
 f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
 f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
@@ -283,7 +283,7 @@ myEnemy.setPosition(74, 10)
 while (true) {
     if (Mode == 1) {
         pause(100)
-        for (let index = 0; index <= 1000; index++) {
+        for (let index = 0; index <= 100; index++) {
             projectile2 = sprites.createProjectileFromSprite(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -309,7 +309,6 @@ while (true) {
                 }
                 pause(50)
             }
-            pause(20)
             index += 0.55
         }
         Mode += 1
@@ -321,12 +320,12 @@ while (true) {
             effects.clearParticles(myEnemy)
             myEnemy.startEffect(effects.fire)
             myEnemy.follow(mySprite, 70)
-            for (let index = 0; index < 1; index++) {
+            for (let index = 0; index < 100; index++) {
                 if (mySprite.x < 65 && mySprite.x > 55) {
                     if (mySprite.y < 115 && mySprite.y > 105) {
                         teleport(0)
-                        for (let index = 0; index < 1000; index++) {
-                            pause(1)
+                        for (let index = 0; index < 20; index++) {
+                            pause(50)
                             if (mySprite.overlapsWith(myEnemy)) {
                                 info.changeLifeBy(-1)
                             }
@@ -336,8 +335,8 @@ while (true) {
                 if (mySprite.x < 75 && mySprite.x > 65) {
                     if (mySprite.y > 15 && mySprite.y < 25) {
                         teleport(1)
-                        for (let index = 0; index < 1000; index++) {
-                            pause(1)
+                        for (let index = 0; index < 20; index++) {
+                            pause(50)
                             if (mySprite.overlapsWith(myEnemy)) {
                                 info.changeLifeBy(-1)
                             }
@@ -355,12 +354,16 @@ while (true) {
                         }
                     }
                 }
-                pause(1)
+                pause(100)
+                if (mySprite.overlapsWith(myEnemy)) {
+                    info.changeLifeBy(-1)
+                }
             }
             Mode += 1
         } else {
             myEnemy.follow(mySprite, 40)
-            for (let index = 0; index < 300; index++) {
+            effects.clearParticles(myEnemy)
+            for (let index = 0; index < 200; index++) {
                 projectile = sprites.createProjectileFromSprite(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -378,10 +381,14 @@ while (true) {
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
-`, myEnemy, (mySprite.x - myEnemy.x) * 200 / Math.sqrt((mySprite.x - myEnemy.x) ** 2 + (mySprite.y - myEnemy.y) ** 2), 200 * (mySprite.y - myEnemy.y) / Math.sqrt((mySprite.x - myEnemy.x) ** 2 + (mySprite.y - myEnemy.y) ** 2))
-                pause(100)
+`, myEnemy, (mySprite.x - myEnemy.x) * 400 / Math.sqrt((mySprite.x - myEnemy.x) ** 2 + (mySprite.y - myEnemy.y) ** 2), 400 * (mySprite.y - myEnemy.y) / Math.sqrt((mySprite.x - myEnemy.x) ** 2 + (mySprite.y - myEnemy.y) ** 2))
+                for (let index = 0; index < 2; index++) {
+                    pause(50)
+                    if (mySprite.overlapsWith(projectile)) {
+                        info.changeLifeBy(-1)
+                    }
+                }
             }
-            effects.clearParticles(myEnemy)
             Mode = 1
         }
     }
