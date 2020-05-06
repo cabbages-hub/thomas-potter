@@ -44,6 +44,25 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     pause(200)
     Shot = 1
 })
+function teleport (Base: number) {
+    if (Math.randomRange(0, 1) == 0) {
+        if (Base == 0) {
+            mySprite.setPosition(70, 20)
+        } else if (Base == 1) {
+            mySprite.setPosition(60, 110)
+        } else {
+            mySprite.setPosition(60, 110)
+        }
+    } else {
+        if (Base == 0) {
+            mySprite.setPosition(140, 70)
+        } else if (Base == 1) {
+            mySprite.setPosition(140, 70)
+        } else {
+            mySprite.setPosition(70, 20)
+        }
+    }
+}
 let projectile3: Sprite = null
 let Shot = 0
 let projectile2: Sprite = null
@@ -270,8 +289,16 @@ while (true) {
         } else {
             effects.clearParticles(myEnemy)
             myEnemy.follow(mySprite, 0)
+            mySprite.setVelocity(50, 0)
             Mode = 1
             pause(100000)
         }
     }
 }
+forever(function () {
+    if (mySprite.x < 0 && mySprite.x > 0) {
+        if (mySprite.y < 0 && mySprite.y > 0) {
+        	
+        }
+    }
+})
