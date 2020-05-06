@@ -65,6 +65,7 @@ function teleport (Base: number) {
 }
 let projectile3: Sprite = null
 let Shot = 0
+let projectile: Sprite = null
 let projectile2: Sprite = null
 let mySprite: Sprite = null
 let Mode = 1
@@ -284,21 +285,48 @@ while (true) {
             effects.clearParticles(myEnemy)
             myEnemy.startEffect(effects.fire)
             myEnemy.follow(mySprite, 100)
-            pause(30000)
+            for (let index = 0; index < 50000; index++) {
+                if (mySprite.x < 65 && mySprite.x > 55) {
+                    if (mySprite.y < 115 && mySprite.y > 105) {
+                        teleport(0)
+                        pause(1000)
+                    }
+                }
+                if (mySprite.x < 75 && mySprite.x > 65) {
+                    if (mySprite.y > 15 && mySprite.y < 25) {
+                        teleport(1)
+                        pause(1000)
+                    }
+                }
+                if (mySprite.x > 135 && mySprite.x < 145) {
+                    if (mySprite.y > 65 && mySprite.y < 75) {
+                        teleport(2)
+                        pause(1000)
+                    }
+                }
+                pause(1)
+            }
             Mode += 1
         } else {
-            effects.clearParticles(myEnemy)
-            myEnemy.follow(mySprite, 0)
-            mySprite.setVelocity(50, 0)
-            Mode = 1
-            pause(100000)
+            myEnemy.follow(mySprite, 30)
+            projectile = sprites.createProjectileFromSprite(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . a . . . . . . . 
+. . . . . . . 5 5 5 . . . . . . 
+. . . . . . a 5 2 5 a . . . . . 
+. . . . . . . 5 5 5 . . . . . . 
+. . . . . . . . a . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, myEnemy, (mySprite.x - myEnemy.x) * 100 / 0, 100)
         }
     }
 }
-forever(function () {
-    if (mySprite.x < 0 && mySprite.x > 0) {
-        if (mySprite.y < 0 && mySprite.y > 0) {
-        	
-        }
-    }
-})
