@@ -195,6 +195,8 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 
 `)
                 Game_start = 0
+                Mode = -2
+                info.setLife(1000000)
             }
         }
         Shot2 = 1
@@ -231,10 +233,6 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         if (Opponent_life <= 0) {
             SpaceDrumstick.destroy()
             spaceHamburger.destroy()
-            projectile.destroy()
-            projectile2.destroy()
-            projectile3.destroy()
-            Projectile_4.destroy()
             effects.confetti.startScreenEffect()
             scene.setBackgroundImage(img`
 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 
@@ -359,6 +357,8 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 
 `)
             Game_start = 0
+            Mode = -1
+            info.setLife(1000000)
         }
     }
 })
@@ -390,9 +390,10 @@ let SpaceDrumstick: Sprite = null
 let Opponent_life = 0
 let Shot = 0
 let Shot2 = 0
+let Mode = 0
 let Game_start = 0
 Game_start = 0
-let Mode = 1
+Mode = 1
 Shot2 = 1
 Shot = 1
 Opponent_life = 1
@@ -828,7 +829,7 @@ spaceHamburger = sprites.create(img`
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 `, SpriteKind.Enemy)
 spaceHamburger.setPosition(75, 10)
-while (!(Opponent_life * info.life() == 0)) {
+while (!(Game_start == 0)) {
     if (Mode == 1) {
         pause(100)
         for (let Index = 0; Index <= 100; Index++) {
@@ -958,7 +959,7 @@ while (!(Opponent_life * info.life() == 0)) {
                     }
                 }
             }
-            Mode = 1
+            Mode += -2
         }
     }
 }
