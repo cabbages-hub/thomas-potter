@@ -22,7 +22,27 @@ namespace myTiles {
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Game_start == 1) {
         if (Shot2 == 1) {
-            Projectile_4 = sprites.createProjectileFromSprite(img`
+            if (SpaceDrumstick.x - spaceHamburger.x == 0 && SpaceDrumstick.y - spaceHamburger.y == 0) {
+                Projectile_4 = sprites.createProjectileFromSprite(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . a . . . . . . . 
+. . . . . . . 8 f 8 . . . . . . 
+. . . . . . a f 6 f a . . . . . 
+. . . . . . . 8 f 8 . . . . . . 
+. . . . . . . . a . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, SpaceDrumstick, 50, 0 * 200 / Math.sqrt((spaceHamburger.x - SpaceDrumstick.x) ** 2 + (spaceHamburger.y - SpaceDrumstick.y) ** 2))
+            } else {
+                Projectile_4 = sprites.createProjectileFromSprite(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -40,16 +60,19 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 `, SpaceDrumstick, (spaceHamburger.x - SpaceDrumstick.x) * 200 / Math.sqrt((spaceHamburger.x - SpaceDrumstick.x) ** 2 + (spaceHamburger.y - SpaceDrumstick.y) ** 2), 200 * (spaceHamburger.y - SpaceDrumstick.y) / Math.sqrt((spaceHamburger.x - SpaceDrumstick.x) ** 2 + (spaceHamburger.y - SpaceDrumstick.y) ** 2))
+            }
             Shot2 = 0
         }
-        for (let index = 0; index < 100; index++) {
-            pause(50)
+        for (let index = 0; index < 50; index++) {
+            pause(100)
             if (spaceHamburger.overlapsWith(Projectile_4)) {
                 Opponent_life += -1
-                if (Opponent_life % 10 == 0) {
-                    if (Opponent_life == 0) {
-                        while (true) {
-                            scene.setBackgroundImage(img`
+            }
+            if (Opponent_life <= 0) {
+                SpaceDrumstick.destroy()
+                spaceHamburger.destroy()
+                effects.confetti.startScreenEffect()
+                scene.setBackgroundImage(img`
 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 
 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 f f f 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 
 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 f f f f 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 f f f f 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 
@@ -171,20 +194,14 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 
 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 
 `)
-                            SpaceDrumstick.destroy()
-                            spaceHamburger.destroy()
-                            effects.confetti.startScreenEffect()
-                        }
-                    }
-                    game.showLongText("OW! That HURT!! (" + String.fromCharCode(Opponent_life) + "Health.)", DialogLayout.Bottom)
-                }
+                Game_start = 0
             }
         }
         Shot2 = 1
     }
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (Shot == 1) {
+    if (Game_start == 1) {
         projectile3 = sprites.createProjectileFromSprite(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -206,11 +223,20 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         Shot = 0
         for (let index = 0; index < 6; index++) {
             pause(50)
-            if (projectile3.overlapsWith(spaceHamburger)) {
-                otherSprite += -2
-                if (Opponent_life < 0) {
-                    while (true) {
-                        scene.setBackgroundImage(img`
+        }
+        Shot = 1
+        if (projectile3.overlapsWith(spaceHamburger)) {
+            Opponent_life += -2
+        }
+        if (Opponent_life <= 0) {
+            SpaceDrumstick.destroy()
+            spaceHamburger.destroy()
+            projectile.destroy()
+            projectile2.destroy()
+            projectile3.destroy()
+            Projectile_4.destroy()
+            effects.confetti.startScreenEffect()
+            scene.setBackgroundImage(img`
 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 
 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 f f f 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 
 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 f f f f 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 f f f f 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 
@@ -332,17 +358,8 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 
 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 
 `)
-                        SpaceDrumstick.destroy()
-                        spaceHamburger.destroy()
-                        effects.confetti.startScreenEffect()
-                    }
-                }
-                if (Opponent_life % 10 == 0 || Opponent_life % 10 == 9) {
-                    game.showLongText("OW! That HURT!!(" + String.fromCharCode(Opponent_life) + "Health)", DialogLayout.Bottom)
-                }
-            }
+            Game_start = 0
         }
-        Shot = 1
     }
 })
 function teleport (Base: number) {
@@ -364,7 +381,6 @@ function teleport (Base: number) {
         }
     }
 }
-let otherSprite = 0
 let projectile3: Sprite = null
 let Projectile_4: Sprite = null
 let projectile: Sprite = null
@@ -379,7 +395,7 @@ Game_start = 0
 let Mode = 1
 Shot2 = 1
 Shot = 1
-Opponent_life = 50
+Opponent_life = 1
 info.setLife(100)
 scene.setBackgroundImage(img`
 f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
@@ -896,7 +912,27 @@ while (!(Opponent_life * info.life() == 0)) {
             spaceHamburger.follow(SpaceDrumstick, 40)
             effects.clearParticles(spaceHamburger)
             for (let index = 0; index < 200; index++) {
-                projectile = sprites.createProjectileFromSprite(img`
+                if (SpaceDrumstick.x - spaceHamburger.x == 0 && SpaceDrumstick.y - spaceHamburger.y == 0) {
+                    projectile = sprites.createProjectileFromSprite(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . a . . . . . . . 
+. . . . . . . 5 5 5 . . . . . . 
+. . . . . . a 5 2 5 a . . . . . 
+. . . . . . . 5 5 5 . . . . . . 
+. . . . . . . . a . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, spaceHamburger, 50, 50)
+                } else {
+                    projectile = sprites.createProjectileFromSprite(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -914,6 +950,7 @@ while (!(Opponent_life * info.life() == 0)) {
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 `, spaceHamburger, (SpaceDrumstick.x - spaceHamburger.x) * 600 / Math.sqrt((SpaceDrumstick.x - spaceHamburger.x) ** 2 + (SpaceDrumstick.y - spaceHamburger.y) ** 2), 600 * (SpaceDrumstick.y - spaceHamburger.y) / Math.sqrt((SpaceDrumstick.x - spaceHamburger.x) ** 2 + (SpaceDrumstick.y - spaceHamburger.y) ** 2))
+                }
                 for (let index = 0; index < 6; index++) {
                     pause(50)
                     if (SpaceDrumstick.overlapsWith(projectile)) {
