@@ -396,7 +396,7 @@ Game_start = 0
 Mode = 1
 Shot2 = 1
 Shot = 1
-Opponent_life = 1
+Opponent_life = 20
 info.setLife(100)
 scene.setBackgroundImage(img`
 f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
